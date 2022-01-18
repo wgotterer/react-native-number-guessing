@@ -3,7 +3,12 @@ import {TextInput, StyleSheet} from 'react-native'
 
 const Input = props => {
     return(
-        <TextInput style={{...styles.input, ...props.style}} />
+        //React allows us to pass props using the spread operator
+        // this allows us to customize our Input components and use
+        // textInput props like keyboardType. the style prop takes all the styles
+        // from the stylesheet in this component and then also adds the styleSheet
+        // being used on the TextInput in a different component. EX: Component StartGameScreen
+        <TextInput {...props} style={{...styles.input, ...props.style}} />
 
     )
 }
