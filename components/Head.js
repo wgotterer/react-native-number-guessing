@@ -1,4 +1,5 @@
 import React from 'react'
+import Colors from '../constants/colors'
 import {View, StyleSheet, Text} from 'react-native'
 
  const Head = props => {
@@ -15,7 +16,7 @@ import {View, StyleSheet, Text} from 'react-native'
         width: '100%',
         height: 90,
         paddingTop: 36,
-        backgroundColor: '#f7287b',
+        backgroundColor: Colors.primary,
         alignItems: "center",
         justifyContent: "center"
     },
