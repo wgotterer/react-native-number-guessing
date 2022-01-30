@@ -1,25 +1,91 @@
-import React from 'react'
+import React, {useState} from 'react'
 import Card from '../components/Card'
-import {View, StyleSheet, Text, Button} from 'react-native'
+import {View, StyleSheet, Text, Button, TouchableWithoutFeedback, Keyboard, Alert} from 'react-native'
 import Colors from '../constants/colors'
 import Input from '../components/Input'
+import NumberContainer from '../components/NumberContainer'
 
 const StartGameScreen = props => {
+
+    const [enteredValue, setEnteredValue] = useState('')
+    const [confirmed, setConfirmed] = useState(false)
+    const [selectedNum, setSelectedNum] = useState()
+
+    const numberInputHandler = inputText => {
+        // setting state/value of Input component to whatever
+        // is being typed in but using the replace method and a regular expression
+        // saying to replace anything that is not a number globally ( globally = the entire text
+        // not just the first thing entered) with an empty string
+        setEnteredValue(inputText.replace(/[^0-9]/g, ''))
+    }
+
+    const handleResetInput = () => {
+        setEnteredValue( "")
+        setConfirmed(false)
+    }
+
+    const handleConfirmInput = () => {
+        const choseNum = parseInt(enteredValue)
+        // use the isNan() function instead of the equality check (choseNum === NaN)
+        if(isNaN(choseNum) || choseNum <= 0 || choseNum > 99){
+            // we return to break the function and not continue becuase
+            // the number is invalid 
+            // an alert is also shown
+            Alert.alert("Invalid Number", "Number has to be a number between 1 and 99.", 
+                [{text: "Okay", stlye: "destructive", onPress: handleResetInput}])
+            return
+        }
+        setConfirmed(true)
+        setEnteredValue("")
+        setSelectedNum(parseInt(enteredValue))
+        Keyboard.dismiss("r")
+
+    }
+
+    let confirmedOutput
+    // if we have a defined conformedOutput due to confirmed being truthy(happens in handleConfirmInput)
+    // we return a component visually telling the user what number was chosen
+    if(confirmed){
+        confirmedOutput = 
+        <Card style={styles.summaryContainer}>
+        <Text>You selected </Text>
+        <NumberContainer>{selectedNum}</NumberContainer>
+        <Button title="START GAME" onPress={() => props.handleStartGame(selectedNum)} />
+        </Card>
+        
+    }
+
     return (
+        // Touchable components allows to to touch listerner without giving visual feedback
+        // the keyboard api allows us to interact with the native device
+        <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
         <View style={styles.screen}>
             <Text style={styles.title}>Start a New Game!</Text>
             <Card style={styles.inputContainer}>
                 <Text>Select a Number</Text>
-                <Input blurOnSubmit autoCapitalize="none" autoCorrect={false} keyboardType="number-pad" maxLength={2} style={styles.input} />
+                <Input blurOnSubmit 
+                autoCapitalize="none" 
+                autoCorrect={false} 
+                keyboardType="number-pad" 
+                maxLength={2} 
+                style={styles.input}
+                // onChangeText expects you to pass in a callback function and that
+                // Callback is called when the text input's text changes.
+                //  The Changed text is passed as an argument to the callback handler.
+                onChangeText={numberInputHandler}
+                value={enteredValue}
+                 />
             
             <View style={styles.buttonContainer}>
-            <View style={styles.button}><Button color={Colors.accent} title="Reset"  /></View> 
-            <View style={styles.button}><Button color={Colors.primary} title="Confirm" /></View> 
+            <View style={styles.button}><Button color={Colors.accent} title="Reset" onPress={handleResetInput}  /></View> 
+            <View style={styles.button}><Button color={Colors.primary} title="Confirm" onPress={handleConfirmInput} /></View> 
             </View>
             </Card>
+            {confirmedOutput}
            
 
         </View>
+        </TouchableWithoutFeedback>
     )
 }
 
@@ -55,6 +121,13 @@ const styles = StyleSheet.create({
     input: {
         width: 50,
         textAlign: 'center'
+    }, 
+    summaryContainer: {
+        margin: 20,
+        // now the number and words are centered instead of the default stretch
+        // border box now only takes up as much space as number
+        // when align Items to center
+        alignItems: 'center',
     }
 })
 

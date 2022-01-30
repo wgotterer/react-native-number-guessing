@@ -4,6 +4,11 @@ import React from 'react'
 
 const Card = props => {
     return (
+// Instead of invoking the component with a self-closing tag <Picture /> 
+// if you invoke it will full opening and closing tags <Picture> </Picture> 
+// you can then place more code between it.
+// This de-couples the <Picture> component from its content and makes it more reusable.
+
         <View style={{...styles.card, ...props.style}}>{props.children}</View>
     )
 }
