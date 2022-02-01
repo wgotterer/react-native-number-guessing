@@ -65,6 +65,8 @@ const generateRandomBetween = (min, max, exclude) => {
        const nextNumber = generateRandomBetween(currentLow.current, currentHigh.current, currentGuess)
 
        setCurrentGuess(nextNumber)
+    //    using the setState arrow function to take th current state and
+    // manipulate it
        setRounds(curRounds => curRounds + 1)
 
     }
