@@ -4,6 +4,8 @@ import {View, StyleSheet, Text, Button, TouchableWithoutFeedback, Keyboard, Aler
 import Colors from '../constants/colors'
 import Input from '../components/Input'
 import NumberContainer from '../components/NumberContainer'
+import BodyText from '../components/BodyText'
+import TitleText from '../components/TitleText'
 
 const StartGameScreen = props => {
 
@@ -48,7 +50,7 @@ const StartGameScreen = props => {
     if(confirmed){
         confirmedOutput = 
         <Card style={styles.summaryContainer}>
-        <Text>You selected </Text>
+        <BodyText>You selected</BodyText>
         <NumberContainer>{selectedNum}</NumberContainer>
         <Button title="START GAME" onPress={() => props.handleStartGame(selectedNum)} />
         </Card>
@@ -60,9 +62,9 @@ const StartGameScreen = props => {
         // the keyboard api allows us to interact with the native device
         <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
         <View style={styles.screen}>
-            <Text style={styles.title}>Start a New Game!</Text>
+            <TitleText style={styles.title}>Start a New Game!</TitleText>
             <Card style={styles.inputContainer}>
-                <Text>Select a Number</Text>
+            <BodyText>Select a Number</BodyText>
                 <Input blurOnSubmit 
                 autoCapitalize="none" 
                 autoCorrect={false} 
@@ -100,6 +102,8 @@ const styles = StyleSheet.create({
     title:{
         fontSize: 20,
         marginVertical: 10,
+        fontFamily: "open-sans-bold"
+        
 
     },
     inputContainer:{
@@ -128,6 +132,9 @@ const styles = StyleSheet.create({
         // border box now only takes up as much space as number
         // when align Items to center
         alignItems: 'center',
+    },
+    text:{
+        fontFamily: "open-sans"
     }
 })
 

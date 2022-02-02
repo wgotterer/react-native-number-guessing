@@ -27,16 +27,29 @@ export default function App() {
   const [guessRounds, setGuessRounds] = useState(0)
   const [dataLoaded, setDataLoaded] = useState(false)
 
-  if (!dataLoaded){
-    return <AppLoading 
-        startAsyc={fetchFonts} 
-        onFinish={()=> setDataLoaded(true)} 
-        onError={(err)=> console.log(err)} 
-    />
-    // AppLoading component is rendered becuase I don't want anything else to be rendered if we are still loading data
-    // the startAsync prop is what we want to happen when component is first rendered  
-    // startAsync has to be a function and has to have a promise becuase Expo automitically listens for the promise
-    // and when the loading is down it will call the onFinish prop function 
+
+  // if (!dataLoaded) {
+  //   return (
+  //     <AppLoading
+  //      //   // AppLoading component is rendered becuase I don't want anything else to be rendered if we are still loading data
+  // //   // the startAsync prop is what we want to happen when component is first rendered  
+  // //   // startAsync has to be a function and has to have a promise becuase Expo automitically listens for the promise
+  // //   // and when the loading is down it will call the onFinish prop function 
+  //       startAsync={fetchFonts}
+  //       onFinish={() => setDataLoaded(true)}
+  //       onError={(err) => console.log(err)}
+  //     />
+  //   );
+  // }
+
+  if (!dataLoaded) {
+    return (
+      <AppLoading
+        startAsync={fetchFonts}
+        onFinish={() => setDataLoaded(true)}
+        onError={(err) => console.log(err)}
+      />
+    );
   }
 
   const configureNewGameHandler = () => {
@@ -54,6 +67,7 @@ export default function App() {
   }
 
   let content = <StartGameScreen handleStartGame={handleStartGame} />
+  content = <GameOverScreen roundsNumber={1} userNumber={1} onRestart={configureNewGameHandler}/>
 
   if(userNumber && guessRounds <= 0){
     content = <GameScreen userChoice={userNumber} onGameOver={gameOverHandler} />
