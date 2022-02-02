@@ -1,10 +1,11 @@
 import React, {useState, useRef, useEffect} from 'react'
-import {View, StyleSheet, Text, Alert} from 'react-native'
+import {View, StyleSheet, Text, Alert, ScrollView} from 'react-native'
 import Card from '../components/Card'
 import NumberContainer from '../components/NumberContainer'
 import MainButton from '../components/MainButton'
 // below import allows us to import various icon components from this package
 import { Ionicons} from '@expo/vector-icons'
+
 
 // we include an exclude parameter to make sure the device doesn't guess the users number on the first try
 const generateRandomBetween = (min, max, exclude) => {
@@ -24,13 +25,14 @@ const generateRandomBetween = (min, max, exclude) => {
 
  const GameScreen = (props) => {
 
-    const [currentGuess, setCurrentGuess] = useState(generateRandomBetween(1, 100, props.userChoice))
+    const initialGuess = generateRandomBetween(1, 100, props.userChoice)
+    const [currentGuess, setCurrentGuess] = useState(initialGuess)
     // We use the useRef hook becuase these varbiables are not regenerated when the component rerenders and allows us to 
     // store a new highest number and new lowest number.
     // the variables are store detached from the component once they are initialized
     const currentLow =useRef(1);
     const currentHigh = useRef(100)
-    const [rounds, setRounds] = useState(0)
+    const [pastGuesses, setPastGuesses] = useState([initialGuess])
 
     const { userChoice, onGameOver} = props;
     // destruction the props becuase we want to use them in
@@ -40,7 +42,9 @@ const generateRandomBetween = (min, max, exclude) => {
 
     useEffect(() => {
         if(currentGuess === userChoice){
-            onGameOver(rounds)
+            // to get number of rounds to display we need to pass the number of 
+            // guesses array's length
+            onGameOver(pastGuesses.length)
         }
         
     }, [currentGuess, userChoice, onGameOver ])
@@ -63,14 +67,19 @@ const generateRandomBetween = (min, max, exclude) => {
             // That number is now registered as the new highest value to search between. 
             currentHigh.current = currentGuess
         }else{
-            currentLow.current = currentGuess
+            // I am adding plus one becuase in order to have a unique key when mapping below
+            // without the  + 1 it would be possible for two keys to be the same
+            // becuase the upper boundery is excluded but the lower boundery is included
+            currentLow.current = currentGuess + 1
         }
        const nextNumber = generateRandomBetween(currentLow.current, currentHigh.current, currentGuess)
 
        setCurrentGuess(nextNumber)
     //    using the setState arrow function to take th current state and
     // manipulate it
-       setRounds(curRounds => curRounds + 1)
+    
+        // This takes the current state of pastGuesses and adds the nextNumber thats guessed to the array
+        setPastGuesses(curPastGuesses => [nextNumber ,...curPastGuesses])
 
     }
 
@@ -86,8 +95,13 @@ const generateRandomBetween = (min, max, exclude) => {
                 <MainButton onPress={nextGuessHandler.bind(this, "greater")}>
                     <Ionicons name="md-add" size={24} color="white" />
                 </MainButton>
-                
             </Card>
+            <ScrollView>
+                {pastGuesses.map(guess => 
+                    <View key={guess}>
+                         <Text>{guess}</Text>
+                    </View>)}
+            </ScrollView>
         </View>
     )
 }
