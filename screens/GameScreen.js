@@ -1,7 +1,10 @@
 import React, {useState, useRef, useEffect} from 'react'
-import {View, StyleSheet, Button, Text, Alert} from 'react-native'
+import {View, StyleSheet, Text, Alert} from 'react-native'
 import Card from '../components/Card'
 import NumberContainer from '../components/NumberContainer'
+import MainButton from '../components/MainButton'
+// below import allows us to import various icon components from this package
+import { Ionicons} from '@expo/vector-icons'
 
 // we include an exclude parameter to make sure the device doesn't guess the users number on the first try
 const generateRandomBetween = (min, max, exclude) => {
@@ -77,8 +80,13 @@ const generateRandomBetween = (min, max, exclude) => {
             <Text>Opponent's Guess</Text>
             <NumberContainer>{currentGuess}</NumberContainer>
             <Card style={styles.buttonContainer}>
-                <Button title="LOWER" onPress={nextGuessHandler.bind(this, "lower")} />
-                <Button title="HIGHER" onPress={nextGuessHandler.bind(this, "greater")}/>
+                <MainButton onPress={nextGuessHandler.bind(this, "lower")}>
+                    <Ionicons name="md-remove" size={24} color="white" />
+                </MainButton>
+                <MainButton onPress={nextGuessHandler.bind(this, "greater")}>
+                    <Ionicons name="md-add" size={24} color="white" />
+                </MainButton>
+                
             </Card>
         </View>
     )
@@ -95,9 +103,9 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-around',
         marginTop: 20,
-        width: 300,
+        width: 400,
         // width at 80 so it can exceed the size of the parent View
-        maxWidth: "80%"
+        maxWidth: "90%"
     }
        
     })

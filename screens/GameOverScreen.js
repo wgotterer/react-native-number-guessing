@@ -4,6 +4,7 @@ import { Colors } from 'react-native/Libraries/NewAppScreen'
 import BodyText from '../components/BodyText'
 import TitleText from '../components/TitleText'
 import colors from '../constants/colors'
+import MainButton from '../components/MainButton'
 
 
 
@@ -32,7 +33,7 @@ import colors from '../constants/colors'
            <Text style={styles.highlight}> {props.userNumber}</Text> 
         </BodyText >
         </View>
-        <Button title="New Game" onPress={props.onRestart} />
+        <MainButton onPress={props.onRestart}>New Game</MainButton>
     </View>
      )
  }
