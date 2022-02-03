@@ -75,7 +75,7 @@ export default function App() {
   }
   return (
     <View style={styles.screen}>
-      <Head titles={"Guess a Number"}/>
+      <Head titles={"How Many Cookies In The Cookie Jar?"}/>
       {content}
       
     </View>
@@ -85,7 +85,8 @@ export default function App() {
 const styles = StyleSheet.create({
 
   screen: {
-    flex: 1
+    flex: 1,
+  
   }
   
 });

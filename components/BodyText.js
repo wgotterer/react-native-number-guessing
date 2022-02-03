@@ -13,7 +13,8 @@ const styles = StyleSheet.create({
 
     
 body:{
-    fontFamily: 'open-sans'
+    fontFamily: 'open-sans',
+    textAlign: "center"
 }
    
 })

@@ -67,7 +67,7 @@ const StartGameScreen = props => {
         <View style={styles.screen}>
             <TitleText style={styles.title}>Start a New Game!</TitleText>
             <Card style={styles.inputContainer}>
-            <BodyText>Select a Number</BodyText>
+            <BodyText>Select a Number of Cookies To Put In The Jar</BodyText>
                 <Input blurOnSubmit 
                 autoCapitalize="none" 
                 autoCorrect={false} 

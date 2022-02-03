@@ -1,5 +1,5 @@
 import React, {useState, useRef, useEffect} from 'react'
-import {View, StyleSheet, Text, Alert, ScrollView, FlatList} from 'react-native'
+import {View, StyleSheet, Text, Alert, ScrollView, FlatList, Image} from 'react-native'
 import Card from '../components/Card'
 import NumberContainer from '../components/NumberContainer'
 import MainButton from '../components/MainButton'
@@ -95,6 +95,9 @@ const generateRandomBetween = (min, max, exclude) => {
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
     return (
         <View style={styles.screen}>
+            <View style={styles.cookiePicContainer}>
+                <Image fadeDuration={1000} source={require('../assets/cookiejar.jpeg')} style={styles.cookiePic} resizeMode="cover"/>
+            </View>
             <Text>Opponent's Guess</Text>
             <NumberContainer>{currentGuess}</NumberContainer>
             <Card style={styles.buttonContainer}>
@@ -181,7 +184,23 @@ const styles = StyleSheet.create({
         // alignItems: "center",
         // justifyContent allows us to position content along the main axis of flexbox, which by default is column
         justifyContent: "flex-end"
-    }
+    },
+    
+    cookiePicContainer:{
+        borderRadius: 150,
+        borderWidth: 3,
+        borderColor: "black",
+        width: 200,
+        height: 200,
+        // any child inside of the container that would go out of the container is cut off with overflow
+        overflow: "hidden",
+        marginVertical: 5
+    },
+    cookiePic:{
+        width: "100%",
+         height: "100%",
+
+    },
     
        
     })
