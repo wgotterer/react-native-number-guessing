@@ -1,10 +1,11 @@
 import React, {useState, useRef, useEffect} from 'react'
-import {View, StyleSheet, Text, Alert, ScrollView} from 'react-native'
+import {View, StyleSheet, Text, Alert, ScrollView, FlatList} from 'react-native'
 import Card from '../components/Card'
 import NumberContainer from '../components/NumberContainer'
 import MainButton from '../components/MainButton'
 // below import allows us to import various icon components from this package
 import { Ionicons} from '@expo/vector-icons'
+import BodyText from '../components/BodyText'
 
 
 // we include an exclude parameter to make sure the device doesn't guess the users number on the first try
@@ -22,6 +23,12 @@ const generateRandomBetween = (min, max, exclude) => {
 
 }
 
+// created renderListItem variable to clean up the mapping of the guessed numbers in the return
+ const renderListItem = (listLength, itemData) => 
+    (<View style={styles.listItem}>
+    <BodyText>#{listLength - itemData.index}</BodyText>    
+    <BodyText>{itemData.item}</BodyText>
+    </View>)
 
  const GameScreen = (props) => {
 
@@ -32,7 +39,8 @@ const generateRandomBetween = (min, max, exclude) => {
     // the variables are store detached from the component once they are initialized
     const currentLow =useRef(1);
     const currentHigh = useRef(100)
-    const [pastGuesses, setPastGuesses] = useState([initialGuess])
+    // us toString because the key in FlatList can't be a number
+    const [pastGuesses, setPastGuesses] = useState([initialGuess.toString()])
 
     const { userChoice, onGameOver} = props;
     // destruction the props becuase we want to use them in
@@ -79,10 +87,11 @@ const generateRandomBetween = (min, max, exclude) => {
     // manipulate it
     
         // This takes the current state of pastGuesses and adds the nextNumber thats guessed to the array
-        setPastGuesses(curPastGuesses => [nextNumber ,...curPastGuesses])
+        setPastGuesses(curPastGuesses => [nextNumber.toString() ,...curPastGuesses])
 
     }
 
+    console.log(pastGuesses)
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
     return (
         <View style={styles.screen}>
@@ -96,12 +105,38 @@ const generateRandomBetween = (min, max, exclude) => {
                     <Ionicons name="md-add" size={24} color="white" />
                 </MainButton>
             </Card>
-            <ScrollView>
-                {pastGuesses.map(guess => 
-                    <View key={guess}>
-                         <Text>{guess}</Text>
-                    </View>)}
-            </ScrollView>
+            {/* Wrapped in a view to control the width and height of the boxes
+            If I were to try to style the listItems or ScrollView I wouldnt get
+            the desire result */}
+            <View style={styles.listContainer}>
+                {/* ScrollView nested inside a view works on iOS but not 
+                on Android. Added flex: 1 to allow android to scroll  */}
+
+                {/* to style content inside ScrollView we can use normal style
+                but it wont let you do as much styling. Instead use contenContainerStyle*/}
+
+                {/* <ScrollView contentContainerStyle={styles.list}> */}
+                    {/* add index as a second arg to display the round number. Get this by subtracting the length of 
+                    pastGuesses array to the index. This works becuase each time a new guess is added to the beginning 
+                    of the array.   */}
+                    {/* {pastGuesses.map((guess, index) => renderListItem(guess, pastGuesses.length - index))}
+                </ScrollView> */}
+
+                {/* FlatList is a good alternative to ScrollView if not sure how many items will be displayed
+                it takes a prop data which is what you are feeding into the FlatList
+                it takes a renderItem prop that outputs the components for every item
+                use KeyExtractor prop to override the default. we need a key but have an array of numbers
+                not an array with objects 
+                FlatList also want a key that's a string, not a number */}
+                <FlatList 
+                    keyExtractor={(item) => item} 
+                    data={pastGuesses} 
+                    renderItem={renderListItem.bind(this, pastGuesses.length)} 
+                    contentContainerStyle={styles.list}
+                 />
+
+
+            </View>
         </View>
     )
 }
@@ -120,7 +155,34 @@ const styles = StyleSheet.create({
         width: 400,
         // width at 80 so it can exceed the size of the parent View
         maxWidth: "90%"
+    },
+    listContainer: {
+        // width: "80%",
+        // added flex one to View container for scrolling
+        flex: 1,
+        width: "60%"
+    },
+    listItem: {
+        borderColor: "#ccc",
+        borderWidth: 1,
+        padding: 15,
+        marginVertical: 10,
+        backgroundColor: "white",
+        flexDirection: "row",
+        justifyContent: "space-between",
+        width: "100%"
+    
+    },
+    list: {
+        // flexGrow takes up as much space as it can, similar to flex but flexGrow is more flexible
+        // flexGrow allows the component to keep the other behavior it has such as scrolling on ScrollView
+        flexGrow: 1,
+        // scrollview has default flexbox so can use alignItems to control the cross axis
+        // alignItems: "center",
+        // justifyContent allows us to position content along the main axis of flexbox, which by default is column
+        justifyContent: "flex-end"
     }
+    
        
     })
 
