@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import Card from '../components/Card'
-import {View, StyleSheet, Text, Button, TouchableWithoutFeedback, Keyboard, Alert} from 'react-native'
+import {View, StyleSheet, Text, Button, TouchableWithoutFeedback, Keyboard, Image, Alert} from 'react-native'
 import Colors from '../constants/colors'
 import Input from '../components/Input'
 import NumberContainer from '../components/NumberContainer'
@@ -86,6 +86,10 @@ const StartGameScreen = props => {
             <View style={styles.button}><Button color={Colors.primary} title="Confirm" onPress={handleConfirmInput} /></View> 
             </View>
             </Card>
+            {confirmed ? null :
+            <View style={styles.cookiePicContainer}>
+                <Image fadeDuration={1000} source={require('../assets/emptyjar.png')} style={styles.cookiePic} resizeMode="cover"/>
+            </View>}
             {confirmedOutput}
            
 
@@ -138,7 +142,22 @@ const styles = StyleSheet.create({
     },
     text:{
         fontFamily: "open-sans"
-    }
+    },
+    cookiePicContainer:{
+        borderRadius: 150,
+        borderWidth: 3,
+        borderColor: "black",
+        width: 200,
+        height: 200,
+        // any child inside of the container that would go out of the container is cut off with overflow
+        overflow: "hidden",
+        marginVertical: 5
+    },
+    cookiePic:{
+        width: "100%",
+         height: "100%",
+
+    },
 })
 
 export default  StartGameScreen
