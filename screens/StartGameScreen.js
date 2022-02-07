@@ -1,6 +1,6 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import Card from '../components/Card'
-import {View, StyleSheet, Text, Button, TouchableWithoutFeedback, Dimensions, Keyboard, Image, Alert} from 'react-native'
+import {View, StyleSheet, Text, Button, TouchableWithoutFeedback, ScrollView, Dimensions, Keyboard, KeyboardAvoidingView, Image, Alert} from 'react-native'
 import Colors from '../constants/colors'
 import Input from '../components/Input'
 import NumberContainer from '../components/NumberContainer'
@@ -13,6 +13,10 @@ const StartGameScreen = props => {
     const [enteredValue, setEnteredValue] = useState('')
     const [confirmed, setConfirmed] = useState(false)
     const [selectedNum, setSelectedNum] = useState()
+    const [buttonWidth, setButtonWidth] = useState(Dimensions.get('window').width / 4)
+
+
+  
 
     const numberInputHandler = inputText => {
         // setting state/value of Input component to whatever
@@ -26,6 +30,17 @@ const StartGameScreen = props => {
         setEnteredValue( "")
         setConfirmed(false)
     }
+
+    useEffect(() => {
+        const updateLayout = () => {
+            setButtonWidth(Dimensions.get('window').width / 4)
+        }
+
+        Dimensions.addEventListener('change', updateLayout)
+        return () => {
+            Dimensions.removeEventListener("change", updateLayout)
+        }
+    }, [])
 
     const handleConfirmInput = () => {
         const choseNum = parseInt(enteredValue)
@@ -61,40 +76,48 @@ const StartGameScreen = props => {
     }
 
     return (
-        // Touchable components allows to to touch listerner without giving visual feedback
-        // the keyboard api allows us to interact with the native device
-        <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-        <View style={styles.screen}>
-            <TitleText style={styles.title}>Start a New Game!</TitleText>
-            <Card style={styles.inputContainer}>
-            <BodyText>Select a Number of Cookies To Put In The Jar</BodyText>
-                <Input blurOnSubmit 
-                autoCapitalize="none" 
-                autoCorrect={false} 
-                keyboardType="number-pad" 
-                maxLength={2} 
-                style={styles.input}
-                // onChangeText expects you to pass in a callback function and that
-                // Callback is called when the text input's text changes.
-                //  The Changed text is passed as an argument to the callback handler.
-                onChangeText={numberInputHandler}
-                value={enteredValue}
-                 />
+       
+            // Touchable components allows to to touch listerner without giving visual feedback
+            // the keyboard api allows us to interact with the native device
+            <ScrollView>
+                {/* KeyboardAvoidView wraps around components to make sure keyboard doesnt overlay component 
+                one is typing in. the vertical offset is the amount of pixel it slides up and we can see.
+                position repositions the entire screen by 30 pixels   */}
+                <KeyboardAvoidingView behavior="position" keyboardVerticalOffset="30">
+            <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+            <View style={styles.screen}>
+                <TitleText style={styles.title}>Start a New Game!</TitleText>
+                <Card style={styles.inputContainer}>
+                <BodyText>Select a Number of Cookies To Put In The Jar</BodyText>
+                    <Input blurOnSubmit 
+                    autoCapitalize="none" 
+                    autoCorrect={false} 
+                    keyboardType="number-pad" 
+                    maxLength={2} 
+                    style={styles.input}
+                    // onChangeText expects you to pass in a callback function and that
+                    // Callback is called when the text input's text changes.
+                    //  The Changed text is passed as an argument to the callback handler.
+                    onChangeText={numberInputHandler}
+                    value={enteredValue}
+                    />
+                
+                <View style={styles.buttonContainer}>
+                <View style={{width: buttonWidth}}><Button color={Colors.accent} title="Reset" onPress={handleResetInput}  /></View> 
+                <View style={{width: buttonWidth}}><Button color={Colors.primary} title="Confirm" onPress={handleConfirmInput} /></View> 
+                </View>
+                </Card>
+                {confirmed ? null :
+                <View style={styles.cookiePicContainer}>
+                    <Image fadeDuration={1000} source={require('../assets/emptyjar.png')} style={styles.cookiePic} resizeMode="cover"/>
+                </View>}
+                {confirmedOutput}
             
-            <View style={styles.buttonContainer}>
-            <View style={styles.button}><Button color={Colors.accent} title="Reset" onPress={handleResetInput}  /></View> 
-            <View style={styles.button}><Button color={Colors.primary} title="Confirm" onPress={handleConfirmInput} /></View> 
-            </View>
-            </Card>
-            {confirmed ? null :
-            <View style={styles.cookiePicContainer}>
-                <Image fadeDuration={1000} source={require('../assets/emptyjar.png')} style={styles.cookiePic} resizeMode="cover"/>
-            </View>}
-            {confirmedOutput}
-           
 
-        </View>
-        </TouchableWithoutFeedback>
+            </View>
+            </TouchableWithoutFeedback>
+            </KeyboardAvoidingView>
+        </ScrollView>
     )
 }
 
@@ -135,7 +158,7 @@ const styles = StyleSheet.create({
         // this gives an object where we can get 4 properities 
         // we get the overall width the app runs on and we want two button to fit on the screen
         // so divide by 4
-        width: Dimensions.get('window').width / 4
+        // width: Dimensions.get('window').width / 4
     },
     input: {
         width: 50,

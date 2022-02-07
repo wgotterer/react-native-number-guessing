@@ -45,7 +45,8 @@ import MainButton from '../components/MainButton'
      screen: {
          flex:1,
          justifyContent: "center",
-         alignItems: "center"
+         alignItems: "center",
+         paddingVertical: 10
 
      },
 
