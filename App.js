@@ -1,6 +1,6 @@
 import StartGameScreen from './screens/StartGameScreen';
 import React, {useState} from 'react';
-import { Alert, StyleSheet, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import Head from './components/Head';
 import GameScreen from './screens/GameScreen';
 import GameOverScreen from './screens/GameOverScreen';
@@ -28,29 +28,29 @@ export default function App() {
   const [dataLoaded, setDataLoaded] = useState(false)
 
 
-  // if (!dataLoaded) {
-  //   return (
-  //     <AppLoading
-  //      //   // AppLoading component is rendered becuase I don't want anything else to be rendered if we are still loading data
-  // //   // the startAsync prop is what we want to happen when component is first rendered  
-  // //   // startAsync has to be a function and has to have a promise becuase Expo automitically listens for the promise
-  // //   // and when the loading is down it will call the onFinish prop function 
-  //       startAsync={fetchFonts}
-  //       onFinish={() => setDataLoaded(true)}
-  //       onError={(err) => console.log(err)}
-  //     />
-  //   );
-  // }
-
   if (!dataLoaded) {
     return (
       <AppLoading
+       //   // AppLoading component is rendered becuase I don't want anything else to be rendered if we are still loading data
+  //   // the startAsync prop is what we want to happen when component is first rendered  
+  //   // startAsync has to be a function and has to have a promise becuase Expo automitically listens for the promise
+  //   // and when the loading is down it will call the onFinish prop function 
         startAsync={fetchFonts}
         onFinish={() => setDataLoaded(true)}
         onError={(err) => console.log(err)}
       />
     );
   }
+
+  // if (!dataLoaded) {
+  //   return (
+  //     <AppLoading
+  //       startAsync={fetchFonts}
+  //       onFinish={() => setDataLoaded(true)}
+  //       onError={(err) => console.log(err)}
+  //     />
+  //   );
+  // }
 
   const configureNewGameHandler = () => {
     setGuessRounds(0)
