@@ -1,6 +1,6 @@
 import StartGameScreen from './screens/StartGameScreen';
 import React, {useState} from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, SafeAreaView } from 'react-native';
 import Head from './components/Head';
 import GameScreen from './screens/GameScreen';
 import GameOverScreen from './screens/GameOverScreen';
@@ -74,11 +74,10 @@ export default function App() {
     content = <GameOverScreen roundsNumber={guessRounds} userNumber={userNumber} onRestart={configureNewGameHandler}/>
   }
   return (
-    <View style={styles.screen}>
-      <Head titles={"How Many Cookies In The Cookie Jar?"}/>
-      {content}
-      
-    </View>
+    <SafeAreaView  style={styles.screen}>
+        <Head titles={"How Many Cookies In The Cookie Jar?"}/>
+        {content}
+    </SafeAreaView> 
   );
 }
 

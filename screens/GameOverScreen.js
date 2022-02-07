@@ -1,5 +1,5 @@
 import React from 'react'
-import {View, StyleSheet, Image, Button, ScrollView, Dimensions, Text} from 'react-native'
+import {View, StyleSheet, Image, Button, ScrollView, Dimensions, Text, SafeAreaView} from 'react-native'
 import { Colors } from 'react-native/Libraries/NewAppScreen'
 import BodyText from '../components/BodyText'
 import TitleText from '../components/TitleText'
