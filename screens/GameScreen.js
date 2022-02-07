@@ -39,8 +39,8 @@ const generateRandomBetween = (min, max, exclude) => {
     // the variables are store detached from the component once they are initialized
     const currentLow =useRef(1);
     const currentHigh = useRef(100)
-    const [availbleDeviceWidth, setAvailableDeviceWidth] = useState(Dimensions.get("window").width)
-    const [availbleDeviceHeight, setAvailableDeviceHeight] = useState(Dimensions.get("window").height)
+    const [availableDeviceWidth, setAvailableDeviceWidth] = useState(Dimensions.get("window").width)
+    const [availableDeviceHeight, setAvailableDeviceHeight] = useState(Dimensions.get("window").height)
 
     // us toString because the key in FlatList can't be a number
     const [pastGuesses, setPastGuesses] = useState([initialGuess.toString()])
@@ -107,12 +107,12 @@ const generateRandomBetween = (min, max, exclude) => {
 
     let listContainerStyle = styles.listContainer;
 
-    if (availbleDeviceWidth < 350){
+    if (availableDeviceWidth < 350){
         listContainerStyle = styles.listContainerBig
     }
 
     // have this if to check if phone layout is horizontal/small and render buttons differently
-    if (availbleDeviceHeight > 500){
+    if (availableDeviceHeight > 500){
         return(<View style={styles.screen}>
             <View style={styles.cookiePicContainer}>
                 <Image fadeDuration={1000} source={require('../assets/cookiejar.jpeg')} style={styles.cookiePic} resizeMode="cover"/>
@@ -169,7 +169,8 @@ const generateRandomBetween = (min, max, exclude) => {
             </View>
             <Text>Opponent's Guess</Text>
             <NumberContainer>{currentGuess}</NumberContainer>
-            <Card style={styles.buttonContainer}>
+            <Card style={{...styles.buttonContainer, marginTop: availableDeviceHeight > 600 ? 20 : 5}}>
+            {/* <Card style={[...styles.buttonContainer, {marginTop: availableDeviceHeight > 600 ? 20 : 5}]}> */}
                 <MainButton onPress={nextGuessHandler.bind(this, "lower")}>
                         <Ionicons name="md-remove" size={24} color="white" />
                     </MainButton>
@@ -225,7 +226,7 @@ const styles = StyleSheet.create({
     buttonContainer: {
         flexDirection: 'row',
         justifyContent: 'space-around',
-        marginTop: Dimensions.get("window").height > 600 ? 20 : 5,
+        // marginTop: Dimensions.get("window").height > 600 ? 20 : 5,
         width: 400,
         // width at 80 so it can exceed the size of the parent View
         maxWidth: "90%"
