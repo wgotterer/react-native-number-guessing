@@ -1,6 +1,5 @@
 import React from 'react'
-import {View, StyleSheet, Image, Button, ScrollView, Dimensions, Text, SafeAreaView} from 'react-native'
-import { Colors } from 'react-native/Libraries/NewAppScreen'
+import {View, StyleSheet, Image, ScrollView, Dimensions, Text} from 'react-native'
 import BodyText from '../components/BodyText'
 import TitleText from '../components/TitleText'
 import colors from '../constants/colors'
@@ -75,7 +74,7 @@ import MainButton from '../components/MainButton'
         //  Text components have special style to center (textAlign)
         // wasn't centering because BodyText already had text styles. 
         // In BodyText passed an object and using the spread operator added props.style
-        // to to into acount the textAlign
+        // to take into acount the textAlign
          textAlign: "center",
          fontSize: Dimensions.get("window").height < 600 ? 16 : 20
      },

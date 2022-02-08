@@ -77,8 +77,8 @@ const StartGameScreen = props => {
 
     return (
        
-            // Touchable components allows to to touch listerner without giving visual feedback
-            // the keyboard api allows us to interact with the native device
+           // Touchable components allows to to touch listerner without giving visual feedback
+                // the keyboard api allows us to interact with the native device
             <ScrollView>
                 {/* KeyboardAvoidView wraps around components to make sure keyboard doesnt overlay component 
                 one is typing in. the vertical offset is the amount of pixel it slides up and we can see.
@@ -88,24 +88,24 @@ const StartGameScreen = props => {
             <View style={styles.screen}>
                 <TitleText style={styles.title}>Start a New Game!</TitleText>
                 <Card style={styles.inputContainer}>
-                <BodyText>Select a Number of Cookies To Put In The Jar</BodyText>
-                    <Input blurOnSubmit 
-                    autoCapitalize="none" 
-                    autoCorrect={false} 
-                    keyboardType="number-pad" 
-                    maxLength={2} 
-                    style={styles.input}
-                    // onChangeText expects you to pass in a callback function and that
-                    // Callback is called when the text input's text changes.
-                    //  The Changed text is passed as an argument to the callback handler.
-                    onChangeText={numberInputHandler}
-                    value={enteredValue}
-                    />
-                
-                <View style={styles.buttonContainer}>
-                <View style={{width: buttonWidth}}><Button color={Colors.accent} title="Reset" onPress={handleResetInput}  /></View> 
-                <View style={{width: buttonWidth}}><Button color={Colors.primary} title="Confirm" onPress={handleConfirmInput} /></View> 
-                </View>
+                    <BodyText>Select a Number of Cookies To Put In The Jar</BodyText>
+                        <Input blurOnSubmit 
+                        autoCapitalize="none" 
+                        autoCorrect={false} 
+                        keyboardType="number-pad" 
+                        maxLength={2} 
+                        style={styles.input}
+                        // onChangeText expects you to pass in a callback function and that
+                        // Callback is called when the text input's text changes.
+                        //  The Changed text is passed as an argument to the callback handler.
+                        onChangeText={numberInputHandler}
+                        value={enteredValue}
+                        />
+                    
+                    <View style={styles.buttonContainer}>
+                        <View style={{width: buttonWidth}}><Button color={Colors.accent} title="Reset" onPress={handleResetInput}  /></View> 
+                        <View style={{width: buttonWidth}}><Button color={Colors.primary} title="Confirm" onPress={handleConfirmInput} /></View> 
+                    </View>
                 </Card>
                 {confirmed ? null :
                 <View style={styles.cookiePicContainer}>

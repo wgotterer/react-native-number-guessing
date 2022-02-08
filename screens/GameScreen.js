@@ -48,7 +48,7 @@ const generateRandomBetween = (min, max, exclude) => {
     const { userChoice, onGameOver} = props;
     // destruction the props becuase we want to use them in
     // the dependency array in the useEffect
-    // and to pass props.userChoixe would change every time the parent component changes
+    // and to pass props.userChoice would change every time the parent component changes
     // which we dont want to do. 
 
     useEffect(() => {
