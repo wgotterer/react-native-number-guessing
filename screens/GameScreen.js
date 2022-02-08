@@ -53,8 +53,8 @@ const generateRandomBetween = (min, max, exclude) => {
 
     useEffect(() => {
         const updateLayout = () => {
-            setAvailableDeviceHeight(Dimensions.get("window").width)
-            setAvailableDeviceWidth(Dimensions.get("window").height)
+            setAvailableDeviceHeight(Dimensions.get("window").height)
+            setAvailableDeviceWidth(Dimensions.get("window").width)
         }
         Dimensions.addEventListener("change", updateLayout)
         return () => {
@@ -77,7 +77,7 @@ const generateRandomBetween = (min, max, exclude) => {
             (direction === "lower" && currentGuess < props.userChoice) || 
             (direction === "greater" && currentGuess > props.userChoice)
             ){
-                Alert.alert("Don't lie!", "You know that this is wrong...", [
+                Alert.alert("Don't Cheat!", "That's not right...", [
                     { text: "Sorry", style: "cancel"}
                 ])
             return
@@ -112,12 +112,13 @@ const generateRandomBetween = (min, max, exclude) => {
     }
 
     // have this if to check if phone layout is horizontal/small and render buttons differently
-    if (availableDeviceHeight > 500){
-        return(<View style={styles.screen}>
+    if (availableDeviceHeight < 500){
+        return(
+         <View style={styles.screen}>
             <View style={styles.cookiePicContainer}>
                 <Image fadeDuration={1000} source={require('../assets/cookiejar.jpeg')} style={styles.cookiePic} resizeMode="cover"/>
             </View>
-            <Text>Opponent's Guess</Text>
+             <Text>Opponent's Guess</Text>
             <View style={styles.controls}>
                 <MainButton onPress={nextGuessHandler.bind(this, "lower")}>
                         <Ionicons name="md-remove" size={24} color="white" />
@@ -128,49 +129,24 @@ const generateRandomBetween = (min, max, exclude) => {
                     <Ionicons name="md-add" size={24} color="white" />
                 </MainButton>
             </View>
-            {/* </Card> */}
-            {/* Wrapped in a view to control the width and height of the boxes
-            If I were to try to style the listItems or ScrollView I wouldnt get
-            the desire result */}
             <View style={listContainerStyle}>
-                {/* ScrollView nested inside a view works on iOS but not 
-                on Android. Added flex: 1 to allow android to scroll  */}
-
-                {/* to style content inside ScrollView we can use normal style
-                but it wont let you do as much styling. Instead use contenContainerStyle*/}
-
-                {/* <ScrollView contentContainerStyle={styles.list}> */}
-                    {/* add index as a second arg to display the round number. Get this by subtracting the length of 
-                    pastGuesses array to the index. This works becuase each time a new guess is added to the beginning 
-                    of the array.   */}
-                    {/* {pastGuesses.map((guess, index) => renderListItem(guess, pastGuesses.length - index))}
-                </ScrollView> */}
-
-                {/* FlatList is a good alternative to ScrollView if not sure how many items will be displayed
-                it takes a prop data which is what you are feeding into the FlatList
-                it takes a renderItem prop that outputs the components for every item
-                use KeyExtractor prop to override the default. we need a key but have an array of numbers
-                not an array with objects 
-                FlatList also want a key that's a string, not a number */}
                 <FlatList 
                     keyExtractor={(item) => item} 
                     data={pastGuesses} 
                     renderItem={renderListItem.bind(this, pastGuesses.length)} 
                     contentContainerStyle={styles.list}
                  />
-
-
             </View>
         </View>)
-    }
-        return(<View style={styles.screen}>
+    } else {
+        return(
+        <View style={styles.screen}>
             <View style={styles.cookiePicContainer}>
                 <Image fadeDuration={1000} source={require('../assets/cookiejar.jpeg')} style={styles.cookiePic} resizeMode="cover"/>
             </View>
             <Text>Opponent's Guess</Text>
             <NumberContainer>{currentGuess}</NumberContainer>
-            <Card style={{...styles.buttonContainer, marginTop: availableDeviceHeight > 600 ? 20 : 5}}>
-            {/* <Card style={[...styles.buttonContainer, {marginTop: availableDeviceHeight > 600 ? 20 : 5}]}> */}
+            <Card style={styles.buttonContainer}>
                 <MainButton onPress={nextGuessHandler.bind(this, "lower")}>
                         <Ionicons name="md-remove" size={24} color="white" />
                     </MainButton>
@@ -211,7 +187,10 @@ const generateRandomBetween = (min, max, exclude) => {
 
 
             </View>
-        </View>)
+         </View>
+       )
+    }
+        
     
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
 }
@@ -226,9 +205,9 @@ const styles = StyleSheet.create({
     buttonContainer: {
         flexDirection: 'row',
         justifyContent: 'space-around',
-        // marginTop: Dimensions.get("window").height > 600 ? 20 : 5,
+        marginTop: Dimensions.get("window").height > 600 ? 20 : 5,
         width: 400,
-        // width at 80 so it can exceed the size of the parent View
+        // width at 90 so it can exceed the size of the parent View
         maxWidth: "90%"
     },
     controls:{
@@ -242,7 +221,7 @@ const styles = StyleSheet.create({
         // width: "80%",
         // added flex one to View container for scrolling
         flex: 1,
-        width: "50%"
+        width: "60%"
     },
     listContainerBig:{
         flex: 1,
