@@ -115,9 +115,6 @@ const generateRandomBetween = (min, max, exclude) => {
     if (availableDeviceHeight < 500){
         return(
          <View style={styles.screen}>
-            <View style={styles.cookiePicContainer}>
-                <Image fadeDuration={1000} source={require('../assets/cookiejar.jpeg')} style={styles.cookiePic} resizeMode="cover"/>
-            </View>
              <Text>Opponent's Guess</Text>
             <View style={styles.controls}>
                 <MainButton onPress={nextGuessHandler.bind(this, "lower")}>
@@ -253,8 +250,8 @@ const styles = StyleSheet.create({
         borderRadius: 150,
         borderWidth: 3,
         borderColor: "black",
-        width: Dimensions.get("window").width > 350 ? 150 : 50,
-        height: Dimensions.get("window").height > 600 ? 150 : 50,
+        width: 100,
+        height: 100,
         // any child inside of the container that would go out of the container is cut off with overflow
         overflow: "hidden",
         marginVertical: 5
