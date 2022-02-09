@@ -4,6 +4,9 @@
 
 Using React Native I aim to create a IOS and Android compatible app that let's a user play a game, How Many Cookies In The Cookie Jar, with the computer in which the user picks a number and the computer has to guess which number the user picked. 
 
+https://user-images.githubusercontent.com/88294702/153098365-d4832e1c-253b-4121-ad5b-1de956c166c9.mov
+
+
 # Open App in a Simulator
 
 run npm install
@@ -26,5 +29,8 @@ https://docs.expo.dev/workflow/ios-simulator/
 run npm start
 
 Once server is running press i to open up on IOS simulator
+
+
+
 
 
