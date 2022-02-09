@@ -1,5 +1,7 @@
 # react-native-number-guessing
 
+## DEMO COMING SOON. LEARNING HOW TO DEPLOY TO APP STORE NOW!
+
 # Description
 
 Using React Native I aim to create an IOS and Android compatible app that lets a user play a game, How Many Cookies In The Cookie Jar, with the computer in which the user picks a number and the computer has to guess which number the user picked. 
