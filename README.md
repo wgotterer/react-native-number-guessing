@@ -8,6 +8,10 @@ Using React Native I aim to create an IOS and Android compatible app that lets a
 
 https://user-images.githubusercontent.com/88294702/153098365-d4832e1c-253b-4121-ad5b-1de956c166c9.mov
 
+# Video Walkthroughs
+
+https://dev.to/wgotterer/react-native-cookie-guessing-game-5130
+
 
 # Open App in a Simulator
 
